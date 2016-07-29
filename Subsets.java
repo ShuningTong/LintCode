@@ -28,6 +28,7 @@ class Subsets {
         System.out.println(subsetsRecursive(nums));
     }
 
+    // iterative runtime: 3 * (a + b + c) * 2 ^ n
     public static List<List<Integer>> subsets(int[] nums) {
         Arrays.sort(nums);
         List<List<Integer>> result = new ArrayList<List<Integer>>();
@@ -55,6 +56,7 @@ class Subsets {
 
     // this method is the most close one to human beings' thoughts
     // https://discuss.leetcode.com/topic/2764/my-solution-using-bit-manipulation
+    // runtime: (an + 1/2*bn + c) * 2 ^ n
     public static ArrayList<ArrayList<Integer>> subsetsBit(int[] nums){
         Arrays.sort(nums);
         int length = nums.length;
@@ -74,6 +76,7 @@ class Subsets {
 
     // the recursive method, from https://discuss.leetcode.com/topic/46159/a-general-approach-to-backtracking-questions-in-java-subsets-permutations-combination-sum-palindrome-partitioning
 
+    // how to calculate the runtime for recursive (backtrack) method
     public static ArrayList<ArrayList<Integer>> subsetsRecursive(int[] nums){
         Arrays.sort(nums);
         ArrayList<ArrayList<Integer>> result = new ArrayList<>();
