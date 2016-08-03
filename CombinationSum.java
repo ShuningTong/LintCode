@@ -33,6 +33,7 @@ public class CombinationSum {
         return result;
     }
 
+    // 继续改进的思路：http://blog.csdn.net/happyaaaaaaaaaaa/article/details/50897809
     public static void backtrack(ArrayList<ArrayList<Integer>> result, ArrayList<Integer> temp, int[] candidates, int target, int sum, int start){
         if (sum == target){
             result.add(new ArrayList<Integer>(temp));
