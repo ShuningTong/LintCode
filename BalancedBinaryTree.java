@@ -52,4 +52,39 @@ public class BalancedBinaryTree {
         }
         return Math.max(left, right) + 1;
     }
+
+    // 分治
+    public boolean isBalancedDC(TreeNode root){
+        return helper(root).is_bst;
+    }
+
+    public ResultType helper(TreeNode cur){
+        if (cur == null){
+            return new ResultType(-1, true);
+        }
+
+        ResultType left = helper(cur.left);
+        ResultType right = helper(cur.right);
+        int diffDepth = Math.abs(left.maxDepth, right.maxDepth);
+        int maxDepth = Math.max(left.maxDepth, right.maxDepth) + 1;
+
+        if (!left.is_bst || !right.is_bst){
+            return new ResultType(maxDepth, false);
+        }
+        if (diffDepth > 1){
+            return new ResultType(maxDepth, false);
+        }
+        return new ResultType(maxDepth, true);
+    }
+}
+
+// 在面试的时候如果需要定义一个这样的class就不要用public
+class ResultType{
+    public int maxDepth;
+    public boolean is_bst;
+
+    public ResultType(int maxDepth, boolean is_bst){
+        this.maxDepth = maxDepth;
+        this.is_bst = is_bst;
+    }
 }

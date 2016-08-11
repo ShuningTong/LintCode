@@ -32,45 +32,36 @@ public class SearchInABigSortedArray {
             return -1;
         }
         int i = 1;
-        // this is more clear, but we can also do:
-        // while(reader.get(i) < target){
-        //      i *= 2;
-        //}
 
         // this indicates we can skip this while loop from two possible exits
-        while (reader.get(i) != Integer.MAX_VALUE){
-            if (reader.get(i) < target){
-                i *= 2;
-            } else {
-                break;
-            }
+        // 找到第一个右边界大于等于目标值的点
+        while(reader.get(i - 1) < target){
+            i *= 2;
         }
 
         // if loop exits when reader.get(i) == Integer.MAX_VALUE, 
         // we are still not sure if the target exists in the array
+        // 这一点很容易出错
 
-        int start = i / 2 + 1;
+        int start = i / 2;
         int end = i;
-        if (i == 1){
-            start = 0;
-        }
 
-        while(start <= end){
-            int mid = (start + end) / 2;
-            if (reader.get(mid) == Integer.MAX_VALUE){
+        while(start + 1 < end){
+            int mid = start + (end - start) / 2;
+            if (reader.get(mid) < target){
+                start = mid + 1;
+            } else if (reader.get(mid) > target){
                 end = mid - 1;
             } else {
-                if (reader.get(mid) < target){
-                    start = mid + 1;
-                } else if (reader.get(mid) > target){
-                    end = mid - 1;
-                } else {
-                    if (start == end){
-                        return start;
-                    }
-                    end = mid;
-                }
+                end = mid;
             }
+        }
+
+        if (reader.get(start) == target){
+            return start;
+        }
+        if (reader.get(end) == target){
+            return end;
         }
         return -1;
     }

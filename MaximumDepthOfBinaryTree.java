@@ -15,7 +15,8 @@ public class MaximumDepthOfBinaryTree {
      * @return: An integer.
      */
 
-    // parent.depth = Math.max(leftchild.depth + 1, rightchild.depth + 1)
+    // 分治
+    // Maximum depth = Math.max(leftchild.depth, rightchild.depth) + 1
     //递归三要素之一：定义
     //把root.depth找到
     public int maxDepth(TreeNode cur) {
@@ -24,6 +25,6 @@ public class MaximumDepthOfBinaryTree {
             return 0;
         }
         //递归三要素之三：如何变为更小的状态
-        return Math.max(maxDepth(cur.left) + 1, maxDepth(cur.right) + 1);
+        return Math.max(maxDepth(cur.left), maxDepth(cur.right)) + 1;
     }
 }

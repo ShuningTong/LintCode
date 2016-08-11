@@ -5,35 +5,50 @@ public class SearchInsertPosition {
      * return : an integer
      */
 
+    /* Given nums sorted array and nums target value, 
+    return the index if the target is found. 
+    If not, return the index where it would be if it were inserted in order.
+
+    You may assume NO duplicates in the array.
+    */
+
     public static void main(String[] args){
-        int[] a = new int[4];
-        a[0] = 1;
-        a[1] = 3;
-        a[2] = 5;
-        a[3] = 6;
-        System.out.println(searchInsert(a, 5));
-        System.out.println(searchInsert(a, 2));
-        System.out.println(searchInsert(a, 7));
-        System.out.println(searchInsert(a, 0));
+        int[] nums = new int[4];
+        nums[0] = 1;
+        nums[1] = 3;
+        nums[2] = 5;
+        nums[3] = 6;
+        System.out.println(searchInsert(nums, 5));
+        System.out.println(searchInsert(nums, 2));
+        System.out.println(searchInsert(nums, 7));
+        System.out.println(searchInsert(nums, 0));
     }
 
-    public static int searchInsert(int[] a, int target) {
-        if (a == null){
+    // 找到第一个大于等于目标值的点
+    public static int searchInsert(int[] nums, int target) {
+        if (nums == null || nums.length == 0){
             return 0;
         }
         int start = 0;
-        int end = a.length - 1;
-        while(start <= end){
+        int end = nums.length - 1;
+        while(start + 1 < end){
             int mid = (start + end) / 2;
-            if (a[mid] < target){
+            if (nums[mid] < target){
                 start = mid + 1;
-            }else if (a[mid] > target){
-                end = mid - 1;
+            }else if (nums[mid] > target){
+                end = mid;
             }else{
+                // because no duplicates
                 return mid;
             }
         }
+        if (nums[start] >= target){
+            return start;
+        }
+        if (nums[end] >= target){
+            return end;
+        }
 
-        return start;
+        return end + 1;
     }
 }

@@ -7,9 +7,8 @@ public class SearchForRange {
 
     // future improvement: https://discuss.leetcode.com/topic/5891/clean-iterative-solution-with-two-binary-searches-with-explanation
 
-    // 先找到第一个target值的index1，找不到的话就return [-1, -1]
-    // 然后找到比target值大的第一个index2，return [index1, index2 - 1];
-    // 第二步可能会找到最后一个target值的index，这样就直接return [index1, index2]
+    // 先找到第一个等于target值的位置，找不到的话就return [-1, -1]
+    // 然后找到最后一个等于target值的位置，return [index1, index2]
 
     public static void main(String[] args){
         int[] nums = new int[]{5, 7, 7, 8, 8, 10};
@@ -28,7 +27,7 @@ public class SearchForRange {
         int start = 0;
         int end = nums.length - 1;
 
-        while(start < end){
+        while(start + 1 < end){
             int mid = start + (end - start) / 2;
             if (nums[mid] < target){
                 start = mid + 1;
@@ -39,28 +38,30 @@ public class SearchForRange {
             }
         }
 
-        if (nums[start] != target){
+        int indexFrom = 0;
+        if (nums[start] == target){
+            indexFrom = start;
+        } else if (nums[end] == target){
+            indexFrom = end;
+        } else {
             return new int[]{-1, -1};
         }
 
-        int indexFrom = start;
+        start = indexFrom;
         end = nums.length - 1;
 
-        while(start < end){
+        while(start + 1 < end){
             int mid = start + (end - start) / 2;
             if (nums[mid] > target){
-                end = mid;
+                end = mid - 1;
             } else {
-                start = mid + 1;
+                start = mid;
             }
         }
-        int indexTo;
-        if (nums[start] == target){
-            indexTo = start;
-        } else {
-            indexTo = start - 1;
-        }
 
-        return new int[]{indexFrom, indexTo};
+        if (nums[end] == target){
+            return new int[](indexFrom, end);
+        }
+        return new int[](indexFrom, start);
     }
 }

@@ -57,19 +57,16 @@ public class BinaryTreePreorderTraversal {
     // root等于null的边界情况容易漏掉
     public ArrayList<Integer> preorderTraversalIterative(TreeNode root) {
         ArrayList<Integer> results = new ArrayList<>();
-        if (root == null){
-            return results;
-        }
         Stack<TreeNode> stack = new Stack<>();
-        stack.push(root);
-        while(!stack.empty()){
-            TreeNode cur = stack.pop();
-            results.add(cur.val);
-            if (cur.right != null){
-                stack.push(cur.right); 
-            }   
-            if (cur.right != null){
-                stack.push(cur.left);
+        TreeNode cur = root;
+        while(cur != null || !stack.empty()){
+            if (cur != null){
+                results.add(cur.val);
+                stack.push(cur);
+                cur = cur.left;
+            } else {
+                cur = stack.pop();
+                cur = cur.right; 
             }
         }
         return results;

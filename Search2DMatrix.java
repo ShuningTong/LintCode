@@ -4,6 +4,7 @@ public class Search2DMatrix {
      * @param target, an integer
      * @return a boolean, indicate whether matrix contains target
      */
+    // O(log(n) + log(m)) time
 
     public static void main(String[] args){
         int[][] matrix = new int[2][2];
@@ -28,23 +29,28 @@ public class Search2DMatrix {
         int start = 0;
         int end = m - 1;
         int row = 0;
-        while(start <= end){
+
+        // 找到第一个last number大于等于目标值的行
+        while(start + 1 < end){
             int mid = (start + end) / 2;
             if (matrix[mid][n - 1] < target){
                 start = mid + 1;
-            } else if (matrix[mid][0] > target){
-                end = mid - 1;
             } else {
-                row = mid;
-                break;
+                end = mid;
             }
         }
-        if (start > end){
+        if (matrix[start][n - 1] >= target){
+            row = start;
+        } else if (matrix[end][n - 1] >= target){
+            row = end;
+        } else {
             return false;
         }
+
+        // 普通的二分查找
         start = 0;
         end = n - 1;
-        while(start <= end){
+        while(start + 1 < end){
             int mid = (start + end) / 2;
             if (matrix[row][mid] < target){
                 start = mid + 1;
@@ -53,6 +59,9 @@ public class Search2DMatrix {
             } else {
                 return true;
             }
+        }
+        if (matrix[row][start] == target || matrix[row][end] == target){
+            return true;
         }
         return false;
     }
